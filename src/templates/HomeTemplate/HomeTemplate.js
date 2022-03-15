@@ -1,5 +1,8 @@
 import { Fragment } from "react";
 import { Route } from "react-router-dom";
+import Footer from "./Layout/Footer/Footer";
+import Header from "./Layout/Header/Header";
+import HomeCarousel from "./Layout/HomeCarousel/HomeCarousel";
 
 export const HomeTemplate = (props) => {
 	const { Component, ...restProps } = props;
@@ -10,8 +13,10 @@ export const HomeTemplate = (props) => {
 			render={(propsRoute) => {
 				return (
 					<Fragment>
-						<h1>Header</h1>
+						<Header {...propsRoute} />
+						<HomeCarousel {...propsRoute} />
 						<Component {...propsRoute} />
+						<Footer {...propsRoute} />
 					</Fragment>
 				);
 			}}

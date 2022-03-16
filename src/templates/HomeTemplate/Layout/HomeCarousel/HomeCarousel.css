@@ -1,0 +1,14 @@
+.ant-carousel .slick-dots-bottom {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.ant-tabs .ant-tabs-nav {
+    height: 500px;
+    overflow-y: auto;
+}
+
+.ant-tabs .ant-tabs-content {
+    height: 500px;
+    overflow-y: auto;
+}

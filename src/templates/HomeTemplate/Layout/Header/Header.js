@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { history } from "../../../../App";
 
 export default function Header(props) {
 	return (
@@ -45,8 +46,18 @@ export default function Header(props) {
 					</li>
 				</ul>
 				<div className='items-center flex-shrink-0 hidden lg:flex'>
-					<button className='self-center px-8 py-3 rounded'>Sign in</button>
-					<button className='self-center px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-coolGray-900'>
+					<button
+						className='self-center px-8 py-3 rounded'
+						onClick={() => {
+							history.push("/login");
+						}}>
+						Sign in
+					</button>
+					<button
+						className='self-center px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-coolGray-900'
+						onClick={() => {
+							history.push("/register");
+						}}>
 						Sign up
 					</button>
 				</div>

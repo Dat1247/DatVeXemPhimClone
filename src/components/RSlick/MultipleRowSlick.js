@@ -8,6 +8,7 @@ import {
 	SET_PHIM_DANG_CHIEU,
 	SET_PHIM_SAP_CHIEU,
 } from "../../redux/types/QuanLyPhimType";
+import { NavLink } from "react-router-dom";
 
 function SampleNextArrow(props) {
 	const { className, style, onClick } = props;
@@ -42,11 +43,13 @@ export default function MultipleRowsSlick(props) {
 			return (
 				<div key={index} className='mt-2'>
 					<Film_Flip phim={item} />
-					<div
-						className='bg-indigo-300 text-center cursor-pointer py-2 my-2 text-green-50 font-bold mb-4'
-						style={{ width: "250px" }}>
+
+					<NavLink
+						className='bg-indigo-300  text-center cursor-pointer py-2 my-2 font-bold mb-4 text-green-100'
+						to={`/detail/${item.maPhim}`}
+						style={{ width: "250px", display: "inline-block" }}>
 						ĐẶT VÉ
-					</div>
+					</NavLink>
 				</div>
 			);
 		});

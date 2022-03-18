@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import MultipleRowsSlick from "../../components/RSlick/MultipleRowSlick";
 import { layDanhSachPhimAction } from "../../redux/actions/QuanLyPhimAction";
 import { layThongTinHeThongRapAction } from "../../redux/actions/QuanLyRapAction";
+import HomeCarousel from "../../templates/HomeTemplate/Layout/HomeCarousel/HomeCarousel";
 import HomeMenu from "./HomeMenu/HomeMenu";
 
 export default function Home(props) {
@@ -19,14 +20,18 @@ export default function Home(props) {
 	console.log(heThongRapChieu);
 
 	return (
-		<div className='container mb-24'>
-			<section className='text-gray-600 body-font'>
-				<div className='px-5 py-24 mx-auto'>
-					<MultipleRowsSlick arrPhim={arrPhim} />
-				</div>
-			</section>
+		<div>
+			<HomeCarousel />
 
-			<HomeMenu heThongRapChieu={heThongRapChieu} />
+			<div className='container mb-24'>
+				<section className='text-gray-600 body-font'>
+					<div className='px-5 py-24 mx-auto'>
+						<MultipleRowsSlick arrPhim={arrPhim} />
+					</div>
+				</section>
+
+				<HomeMenu heThongRapChieu={heThongRapChieu} />
+			</div>
 		</div>
 	);
 }

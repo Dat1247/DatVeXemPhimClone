@@ -19,9 +19,11 @@ export default function HomeMenu(props) {
 							style={{ width: "100px", height: "150px" }}
 						/>
 						<div className='ml-4'>
-							<h3 className='text-xl text-green-800 font-bold mb-0'>
+							<NavLink
+								className='text-xl text-green-800 font-bold mb-0'
+								to={`/detail/${phim.maPhim}`}>
 								{phim.tenPhim}
-							</h3>
+							</NavLink>
 							<p className='mt-2 my-4 text-sm italic text-gray-700'>
 								{cumRap.diaChi}
 							</p>
@@ -85,7 +87,7 @@ export default function HomeMenu(props) {
 	};
 
 	return (
-		<div className=''>
+		<div className='homeMenu'>
 			<Tabs tabPosition={"left"}>{renderHeThongRap()}</Tabs>
 		</div>
 	);

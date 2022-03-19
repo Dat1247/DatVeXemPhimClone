@@ -31,7 +31,7 @@ export default function HomeMenu(props) {
 								{phim.lstLichChieuTheoPhim?.map((lichChieu, index) => {
 									return (
 										<NavLink
-											to='/'
+											to={`/checkout/${lichChieu.maLichChieu}`}
 											className='bg-cyan-300 text-black px-4 py-3 font-semibold rounded-md hover:text-white hover:bg-cyan-600'
 											key={index}>
 											{moment(lichChieu.ngayChieuGioChieu).format("hh:mm A")}

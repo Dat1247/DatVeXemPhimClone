@@ -11,15 +11,17 @@ import Detail from "./pages/Detail/Detail";
 import { CheckoutTemplate } from "./templates/CheckoutTemplate/CheckoutTemplate";
 import Checkout from "./pages/Checkout/Checkout";
 import { UserTemplate } from "./templates/UserTemplate/UserTemplate";
+import Loading from "./components/Loading/Loading";
 
 export const history = createBrowserHistory();
 
 function App() {
 	return (
 		<Router history={history}>
+			<Loading />
 			<Switch>
 				<UserTemplate path='/login' exact Component={Login} />
-				<Route path='/register' exact component={Register} />
+				<UserTemplate path='/register' exact component={Register} />
 				<HomeTemplate path='/home' exact Component={Home} />
 				<HomeTemplate path='/contact' exact Component={Contact} />
 				<HomeTemplate path='/news' exact Component={News} />

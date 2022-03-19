@@ -85,7 +85,7 @@ export default function Detail(props) {
 										return (
 											<div key={index}>
 												<NavLink
-													to='/'
+													to={`/checkout/${item.maLichChieu}`}
 													className='px-4 py-2 border-2 border-white mt-3 inline-block text-white hover:text-black hover:bg-white font-bold'>
 													{moment(item.ngayChieuGioChieu).format("hh:mm A")}
 												</NavLink>

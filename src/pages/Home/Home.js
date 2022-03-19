@@ -17,8 +17,6 @@ export default function Home(props) {
 		dispatch(layThongTinHeThongRapAction());
 	}, []);
 
-	console.log(heThongRapChieu);
-
 	return (
 		<div>
 			<HomeCarousel />

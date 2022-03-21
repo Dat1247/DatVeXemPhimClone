@@ -29,3 +29,8 @@
     color: black;
     box-shadow: 0 0px 10px -2px #000;
 }
+
+.gheKhachDangDat {
+    background-color: rgb(83, 125, 241) !important;
+    color: white;
+}

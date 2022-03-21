@@ -1,18 +1,20 @@
 import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+	datGheAction,
 	datVeAction,
 	layThongTinPhongVeAction,
 } from "../../redux/actions/QuanLyDatVeAction";
 import { UserOutlined } from "@ant-design/icons";
 import style from "./Checkout.module.css";
 import "./Checkout.css";
-import { CHANGE_TAB_ACTIVE, DAT_GHE } from "../../redux/types/QuanLyDatVeType";
+import { CHANGE_TAB_ACTIVE, DAT_GHE, DAT_VE } from "../../redux/types/QuanLyDatVeType";
 import _ from "lodash";
 import { ThongTinDatVe } from "../../_core/models/ThongTinDatVe";
 import { Tabs } from "antd";
 import { layThongTinNguoiDungAction } from "../../redux/actions/QuanLyNguoiDungAction";
 import moment from "moment";
+import { connection } from "../../index";
 
 const { TabPane } = Tabs;
 
@@ -21,14 +23,52 @@ function Checkout(props) {
 	const { thongTinDangNhap } = useSelector(
 		(state) => state.QuanLyNguoiDungReducer
 	);
-	const { thongTinPhongVe, danhSachGheDangDat } = useSelector(
+	const { thongTinPhongVe, danhSachGheDangDat, danhSachGheKhachDangDat } = useSelector(
 		(state) => state.QuanLyDatVeReducer
 	);
 
 	useEffect(() => {
 		let maLichChieu = props.match.params.id;
 		dispatch(layThongTinPhongVeAction(maLichChieu));
+
+		connection.invoke('datVeThanhCong', () => {
+			dispatch(layThongTinPhongVeAction(maLichChieu));
+
+		})
+
+		connection.invoke('loadDanhSachGhe', props.match.params.id)
+
+		connection.on('loadDanhSachGheDaDat', (dsGheKhachDangDat) => {
+			console.log('dsGheKhachDangDat',dsGheKhachDangDat)
+			dsGheKhachDangDat = dsGheKhachDangDat.filter(item => item.taiKhoan !== thongTinDangNhap.taiKhoan);
+
+			let arrGheKhachDangDat = dsGheKhachDangDat.reduce((result, item, index) => {
+				let arrGhe = JSON.parse(item.danhSachGhe)
+
+				return [...result, ...arrGhe]
+			}, [])
+
+			arrGheKhachDangDat = _.uniqBy(arrGheKhachDangDat, 'maGhe')
+
+			dispatch({
+				type: DAT_VE,
+				arrGheKhachDangDat
+			})
+
+			window.addEventListener('beforeunload', clearGhe)
+
+			return () => {
+				clearGhe()
+
+				window.removeEventListener('beforeunload', clearGhe)
+			}
+
+		})
 	}, []);
+
+	function clearGhe(e){
+		connection.invoke('huyDat', thongTinDangNhap.taiKhoan, props.match.params.id)
+	}
 
 	const { danhSachGhe, thongTinPhim } = thongTinPhongVe;
 
@@ -38,6 +78,13 @@ function Checkout(props) {
 			let classGheDaDat = ghe.daDat ? "gheDaDat" : "";
 			let classGheDangDat = "";
 			let classGheDaDuocDat = "";
+			let classGheKhachDangDat = '';
+
+			let indexGheKhachDangDat = danhSachGheKhachDangDat?.findIndex(gheKD => gheKD.maGhe === ghe.maGhe)
+
+			if(indexGheKhachDangDat !== -1){
+				classGheKhachDangDat = 'gheKhachDangDat'
+			}
 
 			let indexGheDangDat = danhSachGheDangDat?.findIndex(
 				(gheDD) => gheDD.maGhe === ghe.maGhe
@@ -49,20 +96,20 @@ function Checkout(props) {
 				classGheDaDuocDat = "gheDaDuocDat";
 			}
 
+
+
 			return (
 				<Fragment key={index}>
 					<button
 						disabled={ghe.daDat}
-						className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat}`}
+						className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat} ${classGheKhachDangDat}`}
 						onClick={() => {
-							dispatch({
-								type: DAT_GHE,
-								ghe,
-							});
+							
+							dispatch(datGheAction(ghe, props.match.params.id));
 						}}>
-						{ghe.daDat ? (
+						{ghe.daDat || classGheKhachDangDat !== '' ? (
 							<UserOutlined style={{ marginBottom: 7 }} />
-						) : (
+						) :  (
 							<span>{ghe.stt}</span>
 						)}
 					</button>
@@ -84,7 +131,7 @@ function Checkout(props) {
 						</div>
 						<div className='mt-5'>{renderGhe()}</div>
 						<div className='mt-5 flex justify-center w-4/5'>
-							<table className='divide-y divide-gray-200 w-2/3'>
+							<table className='divide-y divide-gray-200 w-full'>
 								<thead className='bg-gray-50'>
 									<tr>
 										<th>Ghế chưa đặt</th>
@@ -92,6 +139,7 @@ function Checkout(props) {
 										<th>Ghế vip</th>
 										<th>Ghế đã được đặt</th>
 										<th>Ghế bạn đã đặt</th>
+										<th>Ghế khách đang đặt</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -112,6 +160,11 @@ function Checkout(props) {
 										</td>
 										<td className='text-center'>
 											<button className='ghe gheDaDuocDat'>
+												<UserOutlined style={{ marginBottom: 7 }} />
+											</button>
+										</td>
+										<td className='text-center'>
+											<button className='ghe gheKhachDangDat'>
 												<UserOutlined style={{ marginBottom: 7 }} />
 											</button>
 										</td>

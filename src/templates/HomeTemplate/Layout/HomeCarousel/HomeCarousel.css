@@ -1,0 +1,24 @@
+.ant-carousel .slick-dots-bottom {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.homeMenu .ant-tabs .ant-tabs-nav {
+    height: 500px;
+    overflow-y: auto;
+}
+
+.homeMenu .ant-tabs .ant-tabs-content {
+    height: 500px;
+    overflow-y: auto;
+}
+
+.lichChieu .ant-tabs {
+    color: white;
+}
+
+.lichChieu .ant-tabs .ant-tabs-content.ant-tabs-content-left {
+    max-height: 300px;
+    height: auto;
+    overflow-y: auto;
+}

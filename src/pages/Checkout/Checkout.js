@@ -1,20 +1,20 @@
 import React, { Fragment, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-	datGheAction,
+
 	datVeAction,
 	layThongTinPhongVeAction,
 } from "../../redux/actions/QuanLyDatVeAction";
 import { UserOutlined } from "@ant-design/icons";
 import style from "./Checkout.module.css";
 import "./Checkout.css";
-import { CHANGE_TAB_ACTIVE, DAT_GHE, DAT_VE } from "../../redux/types/QuanLyDatVeType";
+import { CHANGE_TAB_ACTIVE, DAT_GHE } from "../../redux/types/QuanLyDatVeType";
 import _ from "lodash";
 import { ThongTinDatVe } from "../../_core/models/ThongTinDatVe";
 import { Tabs } from "antd";
 import { layThongTinNguoiDungAction } from "../../redux/actions/QuanLyNguoiDungAction";
 import moment from "moment";
-import { connection } from "../../index";
+
 
 const { TabPane } = Tabs;
 
@@ -31,44 +31,10 @@ function Checkout(props) {
 		let maLichChieu = props.match.params.id;
 		dispatch(layThongTinPhongVeAction(maLichChieu));
 
-		connection.invoke('datVeThanhCong', () => {
-			dispatch(layThongTinPhongVeAction(maLichChieu));
-
-		})
-
-		connection.invoke('loadDanhSachGhe', props.match.params.id)
-
-		connection.on('loadDanhSachGheDaDat', (dsGheKhachDangDat) => {
-			console.log('dsGheKhachDangDat',dsGheKhachDangDat)
-			dsGheKhachDangDat = dsGheKhachDangDat.filter(item => item.taiKhoan !== thongTinDangNhap.taiKhoan);
-
-			let arrGheKhachDangDat = dsGheKhachDangDat.reduce((result, item, index) => {
-				let arrGhe = JSON.parse(item.danhSachGhe)
-
-				return [...result, ...arrGhe]
-			}, [])
-
-			arrGheKhachDangDat = _.uniqBy(arrGheKhachDangDat, 'maGhe')
-
-			dispatch({
-				type: DAT_VE,
-				arrGheKhachDangDat
-			})
-
-			window.addEventListener('beforeunload', clearGhe)
-
-			return () => {
-				clearGhe()
-
-				window.removeEventListener('beforeunload', clearGhe)
-			}
-
-		})
+		
 	}, []);
 
-	function clearGhe(e){
-		connection.invoke('huyDat', thongTinDangNhap.taiKhoan, props.match.params.id)
-	}
+	
 
 	const { danhSachGhe, thongTinPhim } = thongTinPhongVe;
 
@@ -105,7 +71,10 @@ function Checkout(props) {
 						className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat} ${classGheKhachDangDat}`}
 						onClick={() => {
 							
-							dispatch(datGheAction(ghe, props.match.params.id));
+							dispatch({
+								type: DAT_GHE,
+								ghe,
+							})
 						}}>
 						{ghe.daDat || classGheKhachDangDat !== '' ? (
 							<UserOutlined style={{ marginBottom: 7 }} />

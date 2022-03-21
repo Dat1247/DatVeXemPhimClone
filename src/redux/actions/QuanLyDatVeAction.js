@@ -1,9 +1,8 @@
-import { connection } from "../../index";
 import { QuanLyDatVeService } from "../../services/QuanLyDatVeService";
 import { STATUS_CODE } from "../../utils/settings/config";
 import {
     CHUYEN_TAB,
-    DAT_GHE,
+
     DAT_VE_HOAN_TAT,
     LAY_THONG_TIN_PHONG_VE,
 } from "../types/QuanLyDatVeType";
@@ -27,7 +26,7 @@ export const layThongTinPhongVeAction = (maLichChieu) => {
 };
 
 export const datVeAction = (thongTinDatVe) => {
-    return async(dispatch, getState) => {
+    return async(dispatch) => {
         dispatch(openLoadingAction);
         try {
             const { data, status } = await QuanLyDatVeService.datVe(thongTinDatVe);
@@ -39,8 +38,6 @@ export const datVeAction = (thongTinDatVe) => {
                 });
                 await dispatch(closeLoadingAction);
 
-                let taiKhoan = getState().QuanLyNguoiDungReducer.thongTinDangNhap.taiKhoan
-                await connection.invoke('datGheThanhCong', taiKhoan, thongTinDatVe.maLichChieu)
                 await dispatch({
                     type: CHUYEN_TAB,
                 });
@@ -51,21 +48,3 @@ export const datVeAction = (thongTinDatVe) => {
         }
     };
 };
-
-export const datGheAction = (ghe, maLichChieu) => {
-    return async(dispatch, getState) => {
-        await dispatch({
-            type: DAT_GHE,
-            ghe,
-        })
-
-        let danhSachGheDangDat = await getState().QuanLyDatVeReducer.danhSachGheKhachDangDat;
-        danhSachGheDangDat = JSON.stringify(danhSachGheDangDat)
-        let taiKhoan = getState().QuanLyNguoiDungReducer.thongTinDangNhap.taiKhoan
-        maLichChieu = Number(maLichChieu)
-
-
-        await connection.invoke('datGhe', taiKhoan, danhSachGheDangDat, maLichChieu)
-
-    }
-}

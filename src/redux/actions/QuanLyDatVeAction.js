@@ -1,6 +1,6 @@
 import { QuanLyDatVeService } from "../../services/QuanLyDatVeService";
 import { STATUS_CODE } from "../../utils/settings/config";
-import { CLOSE_LOADING, OPEN_LOADING } from "../types/LoadingType";
+
 import {
 	CHUYEN_TAB,
 	DAT_VE_HOAN_TAT,
@@ -26,7 +26,7 @@ export const layThongTinPhongVeAction = (maLichChieu) => {
 };
 
 export const datVeAction = (thongTinDatVe) => {
-	return async (dispatch) => {
+	return async (dispatch, getState) => {
 		dispatch(openLoadingAction);
 		try {
 			const { data, status } = await QuanLyDatVeService.datVe(thongTinDatVe);

@@ -21,9 +21,8 @@ function Checkout(props) {
 	const { thongTinDangNhap } = useSelector(
 		(state) => state.QuanLyNguoiDungReducer
 	);
-	const { thongTinPhongVe, danhSachGheDangDat } = useSelector(
-		(state) => state.QuanLyDatVeReducer
-	);
+	const { thongTinPhongVe, danhSachGheDangDat, danhSachGheKhachDat } =
+		useSelector((state) => state.QuanLyDatVeReducer);
 
 	useEffect(() => {
 		let maLichChieu = props.match.params.id;
@@ -38,6 +37,7 @@ function Checkout(props) {
 			let classGheDaDat = ghe.daDat ? "gheDaDat" : "";
 			let classGheDangDat = "";
 			let classGheDaDuocDat = "";
+			let classGheKhachDangDat = "";
 
 			let indexGheDangDat = danhSachGheDangDat?.findIndex(
 				(gheDD) => gheDD.maGhe === ghe.maGhe
@@ -45,6 +45,14 @@ function Checkout(props) {
 			if (indexGheDangDat !== -1) {
 				classGheDangDat = "gheDangDat";
 			}
+			let indexGheKhachDangDat = danhSachGheKhachDat?.findIndex(
+				(gheKD) => gheKD.maGhe === ghe.maGhe
+			);
+
+			if (indexGheKhachDangDat !== -1) {
+				classGheKhachDangDat = "gheKhachDangDat";
+			}
+
 			if (ghe.taiKhoanNguoiDat === thongTinDangNhap.taiKhoan) {
 				classGheDaDuocDat = "gheDaDuocDat";
 			}
@@ -52,8 +60,8 @@ function Checkout(props) {
 			return (
 				<Fragment key={index}>
 					<button
-						disabled={ghe.daDat}
-						className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat}`}
+						disabled={ghe.daDat || classGheKhachDangDat !== ""}
+						className={`ghe ${classGheVip} ${classGheDaDat} ${classGheDangDat} ${classGheDaDuocDat} ${classGheKhachDangDat}`}
 						onClick={() => {
 							dispatch({
 								type: DAT_GHE,
@@ -84,7 +92,7 @@ function Checkout(props) {
 						</div>
 						<div className='mt-5'>{renderGhe()}</div>
 						<div className='mt-5 flex justify-center w-4/5'>
-							<table className='divide-y divide-gray-200 w-2/3'>
+							<table className='divide-y divide-gray-200 w-full'>
 								<thead className='bg-gray-50'>
 									<tr>
 										<th>Ghế chưa đặt</th>
@@ -126,7 +134,7 @@ function Checkout(props) {
 						className=' flex flex-col justify-between'
 						style={{
 							minHeight: "100%",
-							boxShadow: "0 0 10px 4px rgba(0,0,0,0.2)",
+							boxShadow: "0 10px 10px 4px rgba(0,0,0,0.2)",
 						}}>
 						<div className='px-5 pt-10'>
 							<h3 className='text-center text-2xl text-green-500 font-bold'>
@@ -236,6 +244,7 @@ function KetQuaDatVe(props) {
 	const renderDanhSachVeDaDat = () => {
 		return thongTinNguoiDung.thongTinDatVe?.map((item, index) => {
 			const danhSachCacGhe = _.first(item.danhSachGhe);
+			const danhSachGheSort = _.sortBy(item.danhSachGhe, "maGhe");
 			return (
 				<div className='p-2 lg:w-1/3 md:w-1/2 w-full' key={index}>
 					<div className='h-full flex items-center border-gray-200 border p-4 rounded-lg'>
@@ -253,10 +262,14 @@ function KetQuaDatVe(props) {
 							<p>Địa điểm: {danhSachCacGhe.tenHeThongRap}</p>
 							<p>
 								Tên rạp: {danhSachCacGhe.tenCumRap} - Ghế:{" "}
-								{item.danhSachGhe.map((ghe, index) => {
+								{danhSachGheSort.map((ghe, index) => {
 									return (
-										<span key={index} className='mr-2'>
+										<span
+											key={index}
+											className='mr-2 text-green-800 text-lg font-semibold'>
+											{"[ "}
 											{ghe.tenGhe}
+											{" ]"}
 										</span>
 									);
 								})}

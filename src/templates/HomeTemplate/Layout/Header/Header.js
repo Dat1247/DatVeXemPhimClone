@@ -4,7 +4,7 @@ import { history } from "../../../../App";
 
 export default function Header(props) {
 	return (
-		<header className=' p-4 bg-black bg-opacity-50 text-white fixed z-40 w-full'>
+		<header className=' py-2 bg-black bg-opacity-80 text-white fixed z-40 w-full'>
 			<div className='container mx-auto flex justify-between h-16 '>
 				<NavLink
 					rel='noopener noreferrer'
@@ -16,7 +16,7 @@ export default function Header(props) {
 						alt='cyberlearn.vn'
 					/>
 				</NavLink>
-				<ul className='items-stretch hidden space-x-3 lg:flex'>
+				<ul className='items-stretch hidden space-x-3 lg:flex mb-0'>
 					<li className='flex'>
 						<NavLink
 							rel='noopener noreferrer'
@@ -54,7 +54,7 @@ export default function Header(props) {
 						Đăng nhập
 					</button>
 					<button
-						className='self-center px-8 py-3 font-semibold rounded border-transparent dark:bg-violet-400 hover:bg-transparent border-2 hover:border-violet-400 duration-300'
+						className='self-center px-8 py-3 font-semibold rounded border-transparent bg-violet-400 hover:bg-transparent border-2 hover:border-violet-400 duration-300'
 						onClick={() => {
 							history.push("/register");
 						}}>

@@ -4,6 +4,7 @@ import {
 	CHUYEN_TAB,
 	DAT_GHE,
 	DAT_VE_HOAN_TAT,
+	LAY_DANH_SACH_GHE_KHACH_DANG_DAT,
 	LAY_THONG_TIN_PHONG_VE,
 } from "../types/QuanLyDatVeType";
 
@@ -11,6 +12,7 @@ const initialState = {
 	thongTinPhongVe: new ThongTinPhongVe(),
 	danhSachGheDangDat: [],
 	tabActive: 1,
+	danhSachGheKhachDat: [],
 };
 
 export const QuanLyDatVeReducer = (state = initialState, action) => {
@@ -43,6 +45,10 @@ export const QuanLyDatVeReducer = (state = initialState, action) => {
 
 		case CHANGE_TAB_ACTIVE: {
 			state.tabActive = action.number;
+			return { ...state };
+		}
+		case LAY_DANH_SACH_GHE_KHACH_DANG_DAT: {
+			state.danhSachGheKhachDat = action.arrGheKhachDat;
 			return { ...state };
 		}
 

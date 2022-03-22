@@ -1,8 +1,14 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { history } from "../../../../App";
+import { useTranslation } from "react-i18next";
+import { Select } from "antd";
+
+const { Option } = Select;
 
 export default function Header(props) {
+	const { t, i18n } = useTranslation();
+
 	return (
 		<header className=' py-2 bg-black bg-opacity-80 text-white fixed z-40 w-full'>
 			<div className='container mx-auto flex justify-between h-16 '>
@@ -51,15 +57,25 @@ export default function Header(props) {
 						onClick={() => {
 							history.push("/login");
 						}}>
-						Đăng nhập
+						{t("signin")}
 					</button>
 					<button
-						className='self-center px-8 py-3 font-semibold rounded border-transparent bg-violet-400 hover:bg-transparent border-2 hover:border-violet-400 duration-300'
+						className='self-center px-8 py-3 font-semibold rounded border-transparent bg-violet-400 hover:bg-transparent border-2 hover:border-violet-400 duration-300 mr-2'
 						onClick={() => {
 							history.push("/register");
 						}}>
-						Đăng ký
+						{t("signup")}
 					</button>
+					<Select
+						defaultValue='vi'
+						style={{ width: 100 }}
+						onChange={(value) => {
+							i18n.changeLanguage(value);
+						}}>
+						<Option value='en'>En</Option>
+						<Option value='chi'>Chi</Option>
+						<Option value='vi'>Vi</Option>
+					</Select>
 				</div>
 				<button className='p-4 lg:hidden'>
 					<svg

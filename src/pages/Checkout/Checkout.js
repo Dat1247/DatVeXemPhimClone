@@ -11,8 +11,11 @@ import { CHANGE_TAB_ACTIVE, DAT_GHE } from "../../redux/types/QuanLyDatVeType";
 import _ from "lodash";
 import { ThongTinDatVe } from "../../_core/models/ThongTinDatVe";
 import { Tabs } from "antd";
+import { HomeOutlined } from "@ant-design/icons";
 import { layThongTinNguoiDungAction } from "../../redux/actions/QuanLyNguoiDungAction";
 import moment from "moment";
+import { TOKEN, USER_LOGIN } from "../../utils/settings/config";
+import { history } from "../../App";
 
 const { TabPane } = Tabs;
 
@@ -205,14 +208,74 @@ function Checkout(props) {
 	);
 }
 
-export default function Demo(props) {
+export default function CheckoutTab(props) {
 	const { tabActive } = useSelector((state) => state.QuanLyDatVeReducer);
+	const { thongTinDangNhap } = useSelector(
+		(state) => state.QuanLyNguoiDungReducer
+	);
 	const dispatch = useDispatch();
+
+	useEffect(() => {
+		return () => {
+			dispatch({
+				type: CHANGE_TAB_ACTIVE,
+				number: "1",
+			});
+		};
+	}, []);
+
+	const operations = {
+		left: (
+			<div
+				className='mr-4 cursor-pointer'
+				onClick={() => {
+					history.push("/");
+				}}>
+				{
+					<HomeOutlined
+						className='hover:text-blue-800 duration-500'
+						style={{ fontSize: 20 }}
+					/>
+				}
+			</div>
+		),
+		right: (
+			<Fragment>
+				<div className='flex items-center'>
+					<button
+						className='mr-2 flex flex-col items-center'
+						onClick={() => {
+							history.push("/profile");
+						}}>
+						<div className='flex justify-center items-center w-12 h-12 rounded-full bg-red-200'>
+							{thongTinDangNhap.taiKhoan.substr(0, 1)}
+						</div>
+						<p className='mb-0'>
+							Xin chào!{" "}
+							<span className='font-semibold'>{thongTinDangNhap.taiKhoan}</span>
+						</p>
+					</button>
+					<button
+						onClick={() => {
+							localStorage.removeItem(USER_LOGIN);
+							localStorage.removeItem(TOKEN);
+							history.push("/");
+							window.location.reload();
+						}}
+						className='text-red-500 hover:text-red-800 duration-500'>
+						Đăng xuất
+					</button>
+				</div>
+			</Fragment>
+		),
+	};
+
 	return (
 		<div className='p-5'>
 			<Tabs
 				defaultActiveKey='1'
 				activeKey={tabActive.toString()}
+				tabBarExtraContent={operations}
 				onChange={(key) => {
 					dispatch({
 						type: CHANGE_TAB_ACTIVE,

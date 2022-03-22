@@ -1,8 +1,82 @@
-import React from "react";
+import _ from "lodash";
+import React, { Fragment } from "react";
+import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { history } from "../../../../App";
+import { Menu, Dropdown, Button, Space } from "antd";
+import { TOKEN, USER_LOGIN } from "../../../../utils/settings/config";
+
+const menu = (
+	<Menu>
+		<Menu.Item>
+			<a
+				target='_blank'
+				rel='noopener noreferrer'
+				href='https://www.antgroup.com'>
+				Đăng xuất
+			</a>
+		</Menu.Item>
+	</Menu>
+);
 
 export default function Header(props) {
+	const { thongTinDangNhap } = useSelector(
+		(state) => state.QuanLyNguoiDungReducer
+	);
+
+	const renderThongTinNguoiDung = () => {
+		if (_.isEmpty(thongTinDangNhap)) {
+			return (
+				<Fragment>
+					<button
+						className='self-center px-8 py-3 rounded hover:text-violet-400 mr-2 duration-300'
+						onClick={() => {
+							history.push("/login");
+						}}>
+						Đăng nhập
+					</button>
+					<button
+						className='self-center px-8 py-3 font-semibold rounded border-transparent bg-violet-400 hover:bg-transparent border-2 hover:border-violet-400 duration-300'
+						onClick={() => {
+							history.push("/register");
+						}}>
+						Đăng ký
+					</button>
+				</Fragment>
+			);
+		}
+		return (
+			<Dropdown
+				overlay={() => {
+					return (
+						<Menu>
+							<Menu.Item key='1'>
+								<button
+									className='text-red-500 hover:text-red-800 duration-500'
+									onClick={() => {
+										localStorage.removeItem(USER_LOGIN);
+										localStorage.removeItem(TOKEN);
+										history.push("/");
+										window.location.reload();
+									}}>
+									Đăng xuất
+								</button>
+							</Menu.Item>
+						</Menu>
+					);
+				}}
+				placement='bottom'>
+				<button
+					onClick={() => {
+						history.push("/profile");
+					}}>
+					Xin chào!{" "}
+					<span className='font-bold'>{thongTinDangNhap.taiKhoan}</span>
+				</button>
+			</Dropdown>
+		);
+	};
+
 	return (
 		<header className=' py-2 bg-black bg-opacity-80 text-white fixed z-40 w-full'>
 			<div className='container mx-auto flex justify-between h-16 '>
@@ -46,20 +120,7 @@ export default function Header(props) {
 					</li>
 				</ul>
 				<div className='items-center flex-shrink-0 hidden lg:flex'>
-					<button
-						className='self-center px-8 py-3 rounded hover:text-violet-400 mr-2 duration-300'
-						onClick={() => {
-							history.push("/login");
-						}}>
-						Đăng nhập
-					</button>
-					<button
-						className='self-center px-8 py-3 font-semibold rounded border-transparent bg-violet-400 hover:bg-transparent border-2 hover:border-violet-400 duration-300'
-						onClick={() => {
-							history.push("/register");
-						}}>
-						Đăng ký
-					</button>
+					{renderThongTinNguoiDung()}
 				</div>
 				<button className='p-4 lg:hidden'>
 					<svg

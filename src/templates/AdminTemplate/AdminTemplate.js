@@ -2,13 +2,14 @@ import { Fragment, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Redirect, Route } from "react-router-dom";
 import { TOKEN, USER_LOGIN } from "../../utils/settings/config";
-import { Layout, Menu, Breadcrumb } from "antd";
+import { Layout, Menu } from "antd";
 import {
 	DesktopOutlined,
-	PieChartOutlined,
-	FileOutlined,
 	TeamOutlined,
 	UserOutlined,
+	DiffOutlined,
+	UserAddOutlined,
+	FundOutlined,
 } from "@ant-design/icons";
 import { history } from "../../App";
 
@@ -49,39 +50,42 @@ export const AdminTemplate = (props) => {
 				<Sider collapsible collapsed={state.collapsed} onCollapse={onCollapse}>
 					<div className='logo' />
 					<Menu theme='dark' defaultSelectedKeys={["1"]} mode='inline'>
-						<Menu.Item
-							key='1'
-							icon={<PieChartOutlined />}
-							onClick={() => {
-								history.push("/admin/users");
-							}}>
-							Users
-						</Menu.Item>
-						<Menu.Item
-							key='2'
-							icon={<DesktopOutlined />}
-							onClick={() => {
-								history.push("/admin/films");
-							}}>
-							Films
-						</Menu.Item>
-						<SubMenu key='sub1' icon={<UserOutlined />} title='User'>
-							<Menu.Item key='3'>Tom</Menu.Item>
-							<Menu.Item key='4'>Bill</Menu.Item>
-							<Menu.Item key='5'>Alex</Menu.Item>
+						<SubMenu key='sub1' icon={<TeamOutlined />} title='Users'>
+							<Menu.Item
+								key='1'
+								icon={<UserOutlined />}
+								onClick={() => {
+									history.push("/admin/users");
+								}}>
+								Users
+							</Menu.Item>
+							<Menu.Item
+								key='2'
+								icon={<UserAddOutlined />}
+								onClick={() => {
+									// history.push("/admin/users");
+								}}>
+								Add User
+							</Menu.Item>
 						</SubMenu>
-						<SubMenu key='sub2' icon={<TeamOutlined />} title='Team'>
-							<Menu.Item key='6'>Team 1</Menu.Item>
-							<Menu.Item key='8'>Team 2</Menu.Item>
+						<SubMenu key='sub2' icon={<FundOutlined />} title='Films'>
+							<Menu.Item
+								key='3'
+								icon={<DesktopOutlined />}
+								onClick={() => {
+									history.push("/admin/films");
+								}}>
+								Films
+							</Menu.Item>
+							<Menu.Item
+								key='4'
+								icon={<DiffOutlined />}
+								onClick={() => {
+									history.push("/admin/films/addfilm");
+								}}>
+								Add Film
+							</Menu.Item>
 						</SubMenu>
-						<Menu.Item
-							key='9'
-							icon={<FileOutlined />}
-							onClick={() => {
-								history.push("/admin/showtime");
-							}}>
-							Showtime
-						</Menu.Item>
 					</Menu>
 				</Sider>
 				<Layout className='site-layout'>

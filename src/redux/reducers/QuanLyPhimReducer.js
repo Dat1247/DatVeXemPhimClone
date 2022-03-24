@@ -1,4 +1,5 @@
 import {
+	LAY_THONG_TIN_PHIM_THEO_MA,
 	SET_DANH_SACH_PHIM,
 	SET_PHIM_DANG_CHIEU,
 	SET_PHIM_SAP_CHIEU,
@@ -40,6 +41,7 @@ const initialState = {
 	arrPhimDefault: [],
 	dangChieu: false,
 	sapChieu: false,
+	thongTinPhim: {},
 };
 
 export const QuanLyPhimReducer = (state = initialState, action) => {
@@ -65,6 +67,10 @@ export const QuanLyPhimReducer = (state = initialState, action) => {
 			state.arrPhim = state.arrPhimDefault.filter(
 				(phim) => phim.sapChieu === state.sapChieu
 			);
+			return { ...state };
+		}
+		case LAY_THONG_TIN_PHIM_THEO_MA: {
+			state.thongTinPhim = action.thongTinPhim;
 			return { ...state };
 		}
 		default:

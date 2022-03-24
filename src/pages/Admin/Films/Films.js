@@ -1,13 +1,18 @@
 import React, { Fragment, useEffect } from "react";
-import { Button, Input, Table } from "antd";
+import { Button, Input, Table, Popconfirm } from "antd";
 import {
 	SearchOutlined,
 	EditOutlined,
 	DeleteOutlined,
+	ScheduleOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
-import { layDanhSachPhimAction } from "../../../redux/actions/QuanLyPhimAction";
+import {
+	layDanhSachPhimAction,
+	xoaPhimAction,
+} from "../../../redux/actions/QuanLyPhimAction";
 import { NavLink } from "react-router-dom";
+import { history } from "../../../App";
 
 const { Search } = Input;
 
@@ -19,8 +24,6 @@ export default function Films(props) {
 	useEffect(() => {
 		dispatch(layDanhSachPhimAction());
 	}, []);
-
-	console.log(arrPhimDefault);
 
 	const columns = [
 		{
@@ -82,16 +85,32 @@ export default function Films(props) {
 				return (
 					<Fragment>
 						<NavLink
-							to='/'
+							to={`/admin/films/edit/${record.maPhim}`}
 							className=' text-green-500  mr-4  hover:text-green-800  '
 							style={{ transition: "all 0.5s" }}>
 							<EditOutlined className=' text-2xl' />
 						</NavLink>
+
+						<Popconfirm
+							placement='top'
+							title={"Bạn muốn xóa phim này?"}
+							onConfirm={() => {
+								dispatch(xoaPhimAction(record.maPhim));
+							}}
+							okText='Yes'
+							cancelText='No'>
+							<button
+								className='text-red-400  mr-4  hover:text-red-800'
+								style={{ transition: "all 0.5s" }}>
+								<DeleteOutlined className=' text-2xl' />
+							</button>
+						</Popconfirm>
+
 						<NavLink
-							to='/'
-							className='text-red-400  mr-4  hover:text-red-800'
+							to={`/admin/films/showtime/${record.maPhim}`}
+							className='text-teal-400  mr-4  hover:text-teal-800'
 							style={{ transition: "all 0.5s" }}>
-							<DeleteOutlined className=' text-2xl' />
+							<ScheduleOutlined className=' text-2xl' />
 						</NavLink>
 					</Fragment>
 				);
@@ -100,14 +119,22 @@ export default function Films(props) {
 		},
 	];
 
-	const onSearch = (value) => console.log(value);
+	const onSearch = (value) => {
+		dispatch(layDanhSachPhimAction(value));
+	};
 	function onChange(pagination, filters, sorter, extra) {
 		console.log("params", pagination, filters, sorter, extra);
 	}
 	return (
 		<div className=''>
 			<h3 className='text-2xl'>Quản lý phim</h3>
-			<Button className='mb-4'>Thêm phim</Button>
+			<Button
+				className='mb-4'
+				onClick={() => {
+					history.push("/admin/films/addfilm");
+				}}>
+				Thêm phim
+			</Button>
 			<Search
 				placeholder='Tìm kiếm phim'
 				allowClear

@@ -19,4 +19,18 @@ export const QuanLyRapService = {
 			`api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${maPhim}`
 		);
 	},
+
+	layThongTinHeThongRapShowTime: () => {
+		return BaseService.get(`api/QuanLyRap/LayThongTinHeThongRap`);
+	},
+
+	layThongTinCumRapTheoHeThongRap: (maHeThongRap) => {
+		return BaseService.get(
+			`api/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}`
+		);
+	},
+
+	taoLichChieu: (lichChieu) => {
+		return BaseService.post(`api/QuanLyDatVe/TaoLichChieu`, lichChieu);
+	},
 };

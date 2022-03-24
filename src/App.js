@@ -17,6 +17,8 @@ import { AdminTemplate } from "./templates/AdminTemplate/AdminTemplate";
 import Users from "./pages/Admin/Users/Users";
 import Films from "./pages/Admin/Films/Films";
 import ShowTime from "./pages/Admin/Showtime/ShowTime";
+import AddFilm from "./pages/Admin/Films/AddFilm/AddFilm";
+import EditPhim from "./pages/Admin/Films/EditFilm/EditPhim";
 
 export const history = createBrowserHistory();
 
@@ -36,7 +38,17 @@ function App() {
 				<CheckoutTemplate path='/checkout/:id' exact Component={Checkout} />
 				<AdminTemplate path='/admin/users' exact Component={Users} />
 				<AdminTemplate path='/admin/films' exact Component={Films} />
-				<AdminTemplate path='/admin/showtime' exact Component={ShowTime} />
+				<AdminTemplate path='/admin/films/addfilm' exact Component={AddFilm} />
+				<AdminTemplate
+					path='/admin/films/edit/:id'
+					exact
+					Component={EditPhim}
+				/>
+				<AdminTemplate
+					path='/admin/films/showtime/:id'
+					exact
+					Component={ShowTime}
+				/>
 			</Switch>
 		</Router>
 	);

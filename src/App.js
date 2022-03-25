@@ -19,6 +19,7 @@ import Films from "./pages/Admin/Films/Films";
 import ShowTime from "./pages/Admin/Showtime/ShowTime";
 import AddFilm from "./pages/Admin/Films/AddFilm/AddFilm";
 import EditPhim from "./pages/Admin/Films/EditFilm/EditPhim";
+import EditUser from "./pages/Admin/Users/EditUser/EditUser";
 
 export const history = createBrowserHistory();
 
@@ -28,7 +29,7 @@ function App() {
 			<Loading />
 			<Switch>
 				<UserTemplate path='/login' exact Component={Login} />
-				<UserTemplate path='/register' exact component={Register} />
+				<UserTemplate path='/register' exact Component={Register} />
 				<HomeTemplate path='/home' exact Component={Home} />
 				<HomeTemplate path='/contact' exact Component={Contact} />
 				<HomeTemplate path='/news' exact Component={News} />
@@ -48,6 +49,11 @@ function App() {
 					path='/admin/films/showtime/:id'
 					exact
 					Component={ShowTime}
+				/>
+				<AdminTemplate
+					path='/admin/users/edit/:taiKhoan'
+					exact
+					Component={EditUser}
 				/>
 			</Switch>
 		</Router>

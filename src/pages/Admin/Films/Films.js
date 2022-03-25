@@ -122,11 +122,9 @@ export default function Films(props) {
 	const onSearch = (value) => {
 		dispatch(layDanhSachPhimAction(value));
 	};
-	function onChange(pagination, filters, sorter, extra) {
-		console.log("params", pagination, filters, sorter, extra);
-	}
+
 	return (
-		<div className=''>
+		<div>
 			<h3 className='text-2xl'>Quản lý phim</h3>
 			<Button
 				className='mb-4'
@@ -143,12 +141,7 @@ export default function Films(props) {
 				onSearch={onSearch}
 				className='mb-4'
 			/>
-			<Table
-				columns={columns}
-				dataSource={arrPhimDefault}
-				onChange={onChange}
-				rowKey={"maPhim"}
-			/>
+			<Table columns={columns} dataSource={arrPhimDefault} rowKey={"maPhim"} />
 		</div>
 	);
 }

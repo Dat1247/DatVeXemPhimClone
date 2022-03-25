@@ -35,7 +35,7 @@ export default function Login(props) {
 				<h2
 					className='text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl
               xl:text-bold'>
-					Log in
+					Đăng nhập
 				</h2>
 				<div className='mt-12'>
 					<form onSubmit={handleSubmit}>

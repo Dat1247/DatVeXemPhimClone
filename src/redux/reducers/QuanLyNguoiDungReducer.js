@@ -2,6 +2,7 @@ import { TOKEN, USER_LOGIN } from "../../utils/settings/config";
 import { ThongTinNguoiDung } from "../../_core/models/ThongTinNguoiDung";
 import {
 	DANG_NHAP_ACTION,
+	LAY_DANH_SACH_NGUOI_DUNG,
 	LAY_THONG_TIN_NGUOI_DUNG,
 } from "../types/QuanLyNguoiDungType";
 
@@ -14,6 +15,7 @@ if (localStorage.getItem(USER_LOGIN)) {
 const initialState = {
 	thongTinDangNhap: user,
 	thongTinNguoiDung: new ThongTinNguoiDung(),
+	danhSachNguoiDung: [],
 };
 
 export const QuanLyNguoiDungReducer = (state = initialState, action) => {
@@ -28,6 +30,9 @@ export const QuanLyNguoiDungReducer = (state = initialState, action) => {
 		}
 		case LAY_THONG_TIN_NGUOI_DUNG: {
 			return { ...state, thongTinNguoiDung: action.thongTinNguoiDung };
+		}
+		case LAY_DANH_SACH_NGUOI_DUNG: {
+			return { ...state, danhSachNguoiDung: action.danhSachNguoiDung };
 		}
 		default:
 			return state;

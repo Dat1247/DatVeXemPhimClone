@@ -23,10 +23,10 @@ export default function Register(props) {
 				.required("Mật khẩu không được để trống!"),
 			email: Yup.string()
 				.email("Email không hợp lệ!")
-				.required("Họ tên không được để trống!"),
+				.required("Email không được để trống!"),
 			soDt: Yup.string()
 				.matches(/^\d+$/, "Số điện thoại phải là số!")
-				.required("Họ tên không được để trống!"),
+				.required("Số điện thoại không được để trống!"),
 			hoTen: Yup.string().required("Họ tên không được để trống!"),
 		}),
 		onSubmit: (values) => {

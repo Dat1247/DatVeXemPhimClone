@@ -20,6 +20,7 @@ import ShowTime from "./pages/Admin/Showtime/ShowTime";
 import AddFilm from "./pages/Admin/Films/AddFilm/AddFilm";
 import EditPhim from "./pages/Admin/Films/EditFilm/EditPhim";
 import EditUser from "./pages/Admin/Users/EditUser/EditUser";
+import AddUser from "./pages/Admin/Users/AddUser/AddUser";
 
 export const history = createBrowserHistory();
 
@@ -55,6 +56,7 @@ function App() {
 					exact
 					Component={EditUser}
 				/>
+				<AdminTemplate path='/admin/users/adduser' exact Component={AddUser} />
 			</Switch>
 		</Router>
 	);

@@ -146,7 +146,7 @@ export default function Users(props) {
 			<Button
 				className='mb-4'
 				onClick={() => {
-					history.push("/admin/films/addfilm");
+					history.push("/admin/users/adduser");
 				}}>
 				Thêm người dùng
 			</Button>

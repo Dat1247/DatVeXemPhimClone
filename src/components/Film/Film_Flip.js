@@ -1,9 +1,10 @@
 import React from "react";
 import "./Film_Flip.css";
 import { PlayCircleOutlined } from "@ant-design/icons";
+import { showVideoAction } from "../../redux/actions/ShowVideoAction";
 
 export default function Film_Flip(props) {
-	const { phim } = props;
+	const { phim, dispatch } = props;
 	return (
 		<div className='flip-card'>
 			<div className='flip-card-inner'>
@@ -32,7 +33,12 @@ export default function Film_Flip(props) {
 							height: "100%",
 						}}
 						className='flex items-center justify-center flex-col'>
-						<div className='rounded-full cursor-pointer'>
+						<div
+							className='rounded-full cursor-pointer'
+							onClick={() => {
+								console.log(phim);
+								dispatch(showVideoAction(phim.trailer));
+							}}>
 							<PlayCircleOutlined style={{ fontSize: "50px" }} />
 						</div>
 						<div className='text-2xl mt-2 font-bold'>{phim.tenPhim}</div>

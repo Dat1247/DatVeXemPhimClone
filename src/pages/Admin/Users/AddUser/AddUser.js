@@ -1,40 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Radio, Select } from "antd";
 import { useFormik } from "formik";
-
 import { useDispatch, useSelector } from "react-redux";
 import { GROUP_ID } from "../../../../utils/settings/config";
 import {
-	capNhatNguoiDungAction,
 	layDanhSachLoaiNguoiDungAction,
-	layDanhSachNguoiDungAction,
 	themNguoiDungAction,
-	timKiemNguoiDungAction,
-	timNguoiDungCapNhat,
 } from "../../../../redux/actions/QuanLyNguoiDungAction";
-import { LAY_THONG_TIN_NGUOI_DUNG_CAP_NHAT } from "../../../../redux/types/QuanLyNguoiDungType";
 import * as Yup from "yup";
 
 const { Option } = Select;
 
-export default function EditUser(props) {
+export default function AddUser(props) {
 	const [componentSize, setComponentSize] = useState("default");
-	const { danhSachLoaiNguoiDung, danhSachNguoiDung, nguoiDungCapNhat } =
-		useSelector((state) => state.QuanLyNguoiDungReducer);
+	const { danhSachLoaiNguoiDung } = useSelector(
+		(state) => state.QuanLyNguoiDungReducer
+	);
 
 	const dispatch = useDispatch();
-	// let nguoiDung = danhSachNguoiDung.filter(
-	// 	(nd) => nd.taiKhoan === props.match.params.taiKhoan
-	// );
+
 	const formik = useFormik({
-		enableReinitialize: true,
 		initialValues: {
-			taiKhoan: nguoiDungCapNhat?.taiKhoan,
-			matKhau: nguoiDungCapNhat?.matKhau,
-			email: nguoiDungCapNhat?.email,
-			soDt: nguoiDungCapNhat?.soDt,
-			maLoaiNguoiDung: nguoiDungCapNhat?.maLoaiNguoiDung,
-			hoTen: nguoiDungCapNhat?.hoTen,
+			taiKhoan: "",
+			matKhau: "",
+			email: "",
+			soDt: "",
+			maLoaiNguoiDung: "",
+			hoTen: "",
 			maNhom: "",
 		},
 		validationSchema: Yup.object().shape({
@@ -55,16 +47,12 @@ export default function EditUser(props) {
 		onSubmit: (values) => {
 			values.maNhom = GROUP_ID;
 
-			dispatch(capNhatNguoiDungAction(values));
+			dispatch(themNguoiDungAction(values));
 		},
 	});
 
-	const { values, errors, touched, handleChange, handleSubmit, setFieldValue } =
-		formik;
-
 	useEffect(() => {
 		dispatch(layDanhSachLoaiNguoiDungAction());
-		dispatch(timNguoiDungCapNhat(props.match.params.taiKhoan));
 	}, []);
 
 	const onFormLayoutChange = ({ size }) => {
@@ -86,8 +74,8 @@ export default function EditUser(props) {
 				}}
 				onValuesChange={onFormLayoutChange}
 				size={componentSize}
-				onSubmitCapture={handleSubmit}>
-				<h3 className='text-2xl font-semibold ml-16'>Cập nhật Người Dùng</h3>
+				onSubmitCapture={formik.handleSubmit}>
+				<h3 className='text-2xl font-semibold ml-16'>Thêm Người Dùng</h3>
 				<Form.Item label='Form Size' name='size'>
 					<Radio.Group>
 						<Radio.Button value='small'>Small</Radio.Button>
@@ -96,43 +84,34 @@ export default function EditUser(props) {
 					</Radio.Group>
 				</Form.Item>
 				<Form.Item label='Tài khoản'>
-					<Input
-						disabled={true}
-						name='taiKhoan'
-						value={values.taiKhoan}
-						onChange={handleChange}
-					/>
-					{errors.taiKhoan && touched.taiKhoan ? (
+					<Input name='taiKhoan' onChange={formik.handleChange} />
+					{formik.errors.taiKhoan && formik.touched.taiKhoan ? (
 						<div className='text-red-500' style={{ fontSize: "0.8rem" }}>
-							{errors.taiKhoan}
+							{formik.errors.taiKhoan}
 						</div>
 					) : null}
 				</Form.Item>
 				<Form.Item label='Mật khẩu'>
-					<Input
-						name='matKhau'
-						value={values.matKhau}
-						onChange={handleChange}
-					/>
-					{errors.matKhau && touched.matKhau ? (
+					<Input name='matKhau' onChange={formik.handleChange} />
+					{formik.errors.matKhau && formik.touched.matKhau ? (
 						<div className='text-red-500' style={{ fontSize: "0.8rem" }}>
-							{errors.matKhau}
+							{formik.errors.matKhau}
 						</div>
 					) : null}
 				</Form.Item>
 				<Form.Item label='Email'>
-					<Input name='email' value={values.email} onChange={handleChange} />
-					{errors.email && touched.email ? (
+					<Input name='email' onChange={formik.handleChange} />
+					{formik.errors.email && formik.touched.email ? (
 						<div className='text-red-500' style={{ fontSize: "0.8rem" }}>
-							{errors.email}
+							{formik.errors.email}
 						</div>
 					) : null}
 				</Form.Item>
 				<Form.Item label='Số điện thoại'>
-					<Input name='soDt' value={values.soDt} onChange={handleChange} />
-					{errors.soDt && touched.soDt ? (
+					<Input name='soDt' onChange={formik.handleChange} />
+					{formik.errors.soDt && formik.touched.soDt ? (
 						<div className='text-red-500' style={{ fontSize: "0.8rem" }}>
-							{errors.soDt}
+							{formik.errors.soDt}
 						</div>
 					) : null}
 				</Form.Item>
@@ -140,9 +119,9 @@ export default function EditUser(props) {
 				<Form.Item label='Loại người dùng'>
 					<Select
 						name='maLoaiNguoiDung'
-						value={values.maLoaiNguoiDung}
+						// defaultValue={"KhachHang"}
 						onChange={(value) => {
-							setFieldValue("maLoaiNguoiDung", value);
+							formik.setFieldValue("maLoaiNguoiDung", value);
 						}}>
 						{danhSachLoaiNguoiDung.map((item, index) => {
 							return (
@@ -152,24 +131,24 @@ export default function EditUser(props) {
 							);
 						})}
 					</Select>
-					{errors.maLoaiNguoiDung && touched.maLoaiNguoiDung ? (
+					{formik.errors.maLoaiNguoiDung && formik.touched.maLoaiNguoiDung ? (
 						<div className='text-red-500' style={{ fontSize: "0.8rem" }}>
-							{errors.maLoaiNguoiDung}
+							{formik.errors.maLoaiNguoiDung}
 						</div>
 					) : null}
 				</Form.Item>
 				<Form.Item label='Họ tên'>
-					<Input name='hoTen' value={values.hoTen} onChange={handleChange} />
-					{errors.hoTen && touched.hoTen ? (
+					<Input name='hoTen' onChange={formik.handleChange} />
+					{formik.errors.hoTen && formik.touched.hoTen ? (
 						<div className='text-red-500' style={{ fontSize: "0.8rem" }}>
-							{errors.hoTen}
+							{formik.errors.hoTen}
 						</div>
 					) : null}
 				</Form.Item>
 
 				<Form.Item label='Tác vụ'>
 					<Button htmlType='submit' type='primary'>
-						Cập nhật
+						Thêm
 					</Button>
 				</Form.Item>
 			</Form>

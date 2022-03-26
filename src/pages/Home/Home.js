@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MultipleRowsSlick from "../../components/RSlick/MultipleRowSlick";
+import ShowVideo from "../../components/ShowVideo/ShowVideo";
 import { layDanhSachPhimAction } from "../../redux/actions/QuanLyPhimAction";
 import { layThongTinHeThongRapAction } from "../../redux/actions/QuanLyRapAction";
 import HomeCarousel from "../../templates/HomeTemplate/Layout/HomeCarousel/HomeCarousel";
@@ -19,6 +20,7 @@ export default function Home(props) {
 
 	return (
 		<div>
+			<ShowVideo />
 			<HomeCarousel />
 
 			<div className='container mb-24'>

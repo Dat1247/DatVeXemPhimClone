@@ -31,4 +31,19 @@ export const QuanLyNguoiDungService = {
 			`api/QuanLyNguoiDung/TimKiemNguoiDung?MaNhom=${GROUP_ID}&tuKhoa=${tuKhoa}`
 		);
 	},
+
+	layDanhSachLoaiNguoiDung: () => {
+		return BaseService.get(`api/QuanLyNguoiDung/LayDanhSachLoaiNguoiDung`);
+	},
+
+	themNguoiDung: (nguoiDung) => {
+		return BaseService.post(`api/QuanLyNguoiDung/ThemNguoiDung`, nguoiDung);
+	},
+
+	capNhatNguoiDung: (nguoiDungCapNhat) => {
+		return BaseService.put(
+			`api/QuanLyNguoiDung/CapNhatThongTinNguoiDung`,
+			nguoiDungCapNhat
+		);
+	},
 };

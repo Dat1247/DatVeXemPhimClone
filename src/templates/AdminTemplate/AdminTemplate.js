@@ -63,7 +63,7 @@ export const AdminTemplate = (props) => {
 								key='2'
 								icon={<UserAddOutlined />}
 								onClick={() => {
-									// history.push("/admin/users");
+									history.push("/admin/users/adduser");
 								}}>
 								Add User
 							</Menu.Item>

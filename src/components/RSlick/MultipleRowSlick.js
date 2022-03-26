@@ -42,7 +42,7 @@ export default function MultipleRowsSlick(props) {
 		return props.arrPhim.slice(0, 12).map((item, index) => {
 			return (
 				<div key={index} className='mt-2'>
-					<Film_Flip phim={item} />
+					<Film_Flip phim={item} dispatch={dispatch} />
 
 					<NavLink
 						className='bg-indigo-300  text-center cursor-pointer py-2 my-2 font-bold mb-4 text-green-100'

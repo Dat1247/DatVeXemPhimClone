@@ -2,8 +2,10 @@ import { TOKEN, USER_LOGIN } from "../../utils/settings/config";
 import { ThongTinNguoiDung } from "../../_core/models/ThongTinNguoiDung";
 import {
 	DANG_NHAP_ACTION,
+	LAY_DANH_SACH_LOAI_NGUOI_DUNG,
 	LAY_DANH_SACH_NGUOI_DUNG,
 	LAY_THONG_TIN_NGUOI_DUNG,
+	LAY_THONG_TIN_NGUOI_DUNG_CAP_NHAT,
 } from "../types/QuanLyNguoiDungType";
 
 let user = {};
@@ -16,6 +18,8 @@ const initialState = {
 	thongTinDangNhap: user,
 	thongTinNguoiDung: new ThongTinNguoiDung(),
 	danhSachNguoiDung: [],
+	danhSachLoaiNguoiDung: [],
+	nguoiDungCapNhat: {},
 };
 
 export const QuanLyNguoiDungReducer = (state = initialState, action) => {
@@ -33,6 +37,18 @@ export const QuanLyNguoiDungReducer = (state = initialState, action) => {
 		}
 		case LAY_DANH_SACH_NGUOI_DUNG: {
 			return { ...state, danhSachNguoiDung: action.danhSachNguoiDung };
+		}
+		case LAY_DANH_SACH_LOAI_NGUOI_DUNG: {
+			return { ...state, danhSachLoaiNguoiDung: action.danhSachLoaiNguoiDung };
+		}
+		case LAY_THONG_TIN_NGUOI_DUNG_CAP_NHAT: {
+			let index = state.danhSachNguoiDung.findIndex(
+				(nd) => nd.taiKhoan === action.taiKhoan
+			);
+			if (index !== -1) {
+				state.nguoiDungCapNhat = state.danhSachNguoiDung[index];
+			}
+			return { ...state };
 		}
 		default:
 			return state;

@@ -4,9 +4,12 @@ import { QuanLyNguoiDungService } from "../../services/QuanLyNguoiDungService";
 import { STATUS_CODE } from "../../utils/settings/config";
 import {
 	DANG_NHAP_ACTION,
+	LAY_DANH_SACH_LOAI_NGUOI_DUNG,
 	LAY_DANH_SACH_NGUOI_DUNG,
 	LAY_THONG_TIN_NGUOI_DUNG,
+	LAY_THONG_TIN_NGUOI_DUNG_CAP_NHAT,
 } from "../types/QuanLyNguoiDungType";
+
 import { closeLoadingAction, openLoadingAction } from "./LoadingAction";
 
 export const dangNhapAction = (nguoiDung) => {
@@ -111,5 +114,77 @@ export const timKiemNguoiDungAction = (tuKhoa) => {
 		} catch (err) {
 			alert(err.response?.data.content);
 		}
+	};
+};
+
+export const layDanhSachLoaiNguoiDungAction = () => {
+	return async (dispatch) => {
+		try {
+			const result = await QuanLyNguoiDungService.layDanhSachLoaiNguoiDung();
+
+			if (result.status === STATUS_CODE.SUCCESS) {
+				dispatch({
+					type: LAY_DANH_SACH_LOAI_NGUOI_DUNG,
+					danhSachLoaiNguoiDung: result.data.content,
+				});
+			}
+		} catch (err) {
+			alert(err.response?.data.content);
+		}
+	};
+};
+
+export const themNguoiDungAction = (nguoiDung) => {
+	return async (dispatch) => {
+		try {
+			const result = await QuanLyNguoiDungService.themNguoiDung(nguoiDung);
+
+			if (result.status === STATUS_CODE.SUCCESS) {
+				Notification("success", "Thêm người dùng thành công!");
+				dispatch(layDanhSachNguoiDungAction());
+				history.push("/admin/users");
+			}
+		} catch (err) {
+			Notification(
+				"error",
+				"Thêm người dùng thất bại!",
+				err.response?.data.content
+			);
+		}
+	};
+};
+
+export const capNhatNguoiDungAction = (nguoiDungCapNhat) => {
+	return async (dispatch) => {
+		dispatch(openLoadingAction);
+		try {
+			const result = await QuanLyNguoiDungService.capNhatNguoiDung(
+				nguoiDungCapNhat
+			);
+
+			if (result.status === STATUS_CODE.SUCCESS) {
+				Notification("success", "Cập nhật người dùng thành công!");
+				await dispatch(closeLoadingAction);
+				dispatch(layDanhSachNguoiDungAction());
+				// history.push("/admin/users");
+			}
+		} catch (err) {
+			Notification(
+				"error",
+				"Cập nhật người dùng thất bại!",
+				err.response?.data.content
+			);
+			await dispatch(closeLoadingAction);
+		}
+	};
+};
+
+export const timNguoiDungCapNhat = (taiKhoan) => {
+	return async (dispatch) => {
+		await dispatch(layDanhSachNguoiDungAction());
+		await dispatch({
+			type: LAY_THONG_TIN_NGUOI_DUNG_CAP_NHAT,
+			taiKhoan,
+		});
 	};
 };

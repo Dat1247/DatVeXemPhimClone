@@ -15,7 +15,7 @@ import {
 	layThongTinPhimTheoMaAction,
 	capNhatThongTinPhimUploadAction,
 } from "../../../../redux/actions/QuanLyPhimAction";
-import { GROUP_ID } from "../../../../utils/settings/config";
+import { history } from "../../../../App";
 
 export default function EditFilm(props) {
 	const [componentSize, setComponentSize] = useState("default");
@@ -65,8 +65,6 @@ export default function EditFilm(props) {
 	useEffect(() => {
 		dispatch(layThongTinPhimTheoMaAction(props.match.params.id));
 	}, []);
-
-	// console.log(thongTinPhim);
 
 	const onFormLayoutChange = ({ size }) => {
 		setComponentSize(size);
@@ -206,6 +204,14 @@ export default function EditFilm(props) {
 					</Button>
 				</Form.Item>
 			</Form>
+			<Button
+				className='ml-20'
+				danger
+				onClick={() => {
+					history.goBack();
+				}}>
+				Quay lại
+			</Button>
 		</div>
 	);
 }

@@ -13,6 +13,7 @@ import moment from "moment";
 import { useDispatch } from "react-redux";
 import { themPhimUploadHinhAction } from "../../../../redux/actions/QuanLyPhimAction";
 import { GROUP_ID } from "../../../../utils/settings/config";
+import { history } from "../../../../App";
 
 export default function AddFilm(props) {
 	const [componentSize, setComponentSize] = useState("default");
@@ -159,6 +160,14 @@ export default function AddFilm(props) {
 					</Button>
 				</Form.Item>
 			</Form>
+			<Button
+				className='ml-20'
+				danger
+				onClick={() => {
+					history.goBack();
+				}}>
+				Quay lại
+			</Button>
 		</div>
 	);
 }

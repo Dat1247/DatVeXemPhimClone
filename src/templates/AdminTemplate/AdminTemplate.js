@@ -13,7 +13,7 @@ import {
 } from "@ant-design/icons";
 import { history } from "../../App";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 const { SubMenu } = Menu;
 
 export const AdminTemplate = (props) => {

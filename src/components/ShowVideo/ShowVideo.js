@@ -6,7 +6,7 @@ import { closeVideoAction } from "../../redux/actions/ShowVideoAction";
 export default function ShowVideo(props) {
 	const { isShow, link } = useSelector((state) => state.ShowVideoReducer);
 	const dispatch = useDispatch();
-	console.log(props);
+
 	return (
 		<Fragment>
 			{isShow ? (

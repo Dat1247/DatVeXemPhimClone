@@ -43,7 +43,7 @@ export const layThongTinNguoiDungAction = () => {
 				});
 			}
 		} catch (err) {
-			console.log(err.response?.data);
+			alert(err.response?.data.content);
 		}
 	};
 };
@@ -75,7 +75,7 @@ export const layDanhSachNguoiDungAction = () => {
 				});
 			}
 		} catch (err) {
-			console.log(err);
+			alert(err.response?.data.content);
 		}
 	};
 };
@@ -85,7 +85,6 @@ export const xoaNguoiDungAction = (taiKhoan) => {
 		try {
 			const result = await QuanLyNguoiDungService.xoaNguoiDung(taiKhoan);
 
-			console.log(result);
 			if (result.status === STATUS_CODE.SUCCESS) {
 				Notification("success", "Xóa người dùng thành công");
 				dispatch(layDanhSachNguoiDungAction());
@@ -166,7 +165,6 @@ export const capNhatNguoiDungAction = (nguoiDungCapNhat) => {
 				Notification("success", "Cập nhật người dùng thành công!");
 				await dispatch(closeLoadingAction);
 				dispatch(layDanhSachNguoiDungAction());
-				// history.push("/admin/users");
 			}
 		} catch (err) {
 			Notification(

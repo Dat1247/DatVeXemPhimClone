@@ -17,7 +17,7 @@ export const layThongTinHeThongRapAction = () => {
 				heThongRapChieu: result.data.content,
 			});
 		} catch (err) {
-			console.log(err);
+			alert(err.response?.data.content);
 		}
 	};
 };
@@ -32,7 +32,7 @@ export const layThongTinHeThongRapFooterAction = () => {
 				heThongRapFooter: result.data.content,
 			});
 		} catch (err) {
-			console.log(err);
+			alert(err.response?.data.content);
 		}
 	};
 };
@@ -47,7 +47,7 @@ export const layThongTinLichChieuPhimAction = (maPhim) => {
 				phimDetail: result.data.content,
 			});
 		} catch (err) {
-			console.log(err);
+			alert(err.response?.data.content);
 		}
 	};
 };
@@ -61,7 +61,6 @@ export const taoLichChieuAction = (lichChieu) => {
 
 			history.push("/admin/films");
 		} catch (err) {
-			console.log(err);
 			Notification(
 				"error",
 				"Tạo lịch chiếu thất bại!",

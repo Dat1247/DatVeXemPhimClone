@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from "react";
-import {
-	Form,
-	Input,
-	Button,
-	Radio,
-	Select,
-	Cascader,
-	DatePicker,
-	InputNumber,
-	TreeSelect,
-	Switch,
-} from "antd";
+import { Form, Input, Button, Select, DatePicker, InputNumber } from "antd";
 import { QuanLyRapService } from "../../../services/QuanLyRapService";
 import { useFormik } from "formik";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { taoLichChieuAction } from "../../../redux/actions/QuanLyRapAction";
+import { Notification } from "../../../components/Notification/Notification";
 
 export default function ShowTime(props) {
 	const [state, setState] = useState({
@@ -32,7 +22,6 @@ export default function ShowTime(props) {
 			giaVe: "",
 		},
 		onSubmit: (values) => {
-			console.log(values);
 			dispatch(taoLichChieuAction(values));
 		},
 	});
@@ -46,7 +35,11 @@ export default function ShowTime(props) {
 				heThongRapChieu: result.data.content,
 			});
 		} catch (err) {
-			console.log(err);
+			Notification(
+				"error",
+				"Không thể lấy thông tin hệ thống rạp!",
+				err.response?.data.content
+			);
 		}
 	};
 
@@ -65,7 +58,11 @@ export default function ShowTime(props) {
 				cumRapChieu: result.data.content,
 			});
 		} catch (err) {
-			console.log(err);
+			Notification(
+				"error",
+				"Không thể lấy danh sách cụm rạp!",
+				err.response?.data.content
+			);
 		}
 	};
 

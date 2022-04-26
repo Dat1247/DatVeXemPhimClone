@@ -302,7 +302,6 @@ function KetQuaDatVe(props) {
 	useEffect(() => {
 		dispatch(layThongTinNguoiDungAction());
 	}, []);
-	console.log(thongTinNguoiDung);
 
 	const renderDanhSachVeDaDat = () => {
 		return thongTinNguoiDung.thongTinDatVe?.map((item, index) => {

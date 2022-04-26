@@ -1,7 +1,7 @@
 import React from "react";
 import { useFormik } from "formik";
 import { NavLink } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { dangNhapAction } from "../../redux/actions/QuanLyNguoiDungAction";
 import * as Yup from "yup";
 

@@ -7,25 +7,22 @@ import { GROUP_ID } from "../../../../utils/settings/config";
 import {
 	capNhatNguoiDungAction,
 	layDanhSachLoaiNguoiDungAction,
-	layDanhSachNguoiDungAction,
-	themNguoiDungAction,
-	timKiemNguoiDungAction,
 	timNguoiDungCapNhat,
 } from "../../../../redux/actions/QuanLyNguoiDungAction";
-import { LAY_THONG_TIN_NGUOI_DUNG_CAP_NHAT } from "../../../../redux/types/QuanLyNguoiDungType";
+
 import * as Yup from "yup";
+import { history } from "../../../../App";
 
 const { Option } = Select;
 
 export default function EditUser(props) {
 	const [componentSize, setComponentSize] = useState("default");
-	const { danhSachLoaiNguoiDung, danhSachNguoiDung, nguoiDungCapNhat } =
-		useSelector((state) => state.QuanLyNguoiDungReducer);
+	const { danhSachLoaiNguoiDung, nguoiDungCapNhat } = useSelector(
+		(state) => state.QuanLyNguoiDungReducer
+	);
 
 	const dispatch = useDispatch();
-	// let nguoiDung = danhSachNguoiDung.filter(
-	// 	(nd) => nd.taiKhoan === props.match.params.taiKhoan
-	// );
+
 	const formik = useFormik({
 		enableReinitialize: true,
 		initialValues: {
@@ -173,6 +170,14 @@ export default function EditUser(props) {
 					</Button>
 				</Form.Item>
 			</Form>
+			<Button
+				className='ml-20'
+				danger
+				onClick={() => {
+					history.goBack();
+				}}>
+				Quay lại
+			</Button>
 		</div>
 	);
 }

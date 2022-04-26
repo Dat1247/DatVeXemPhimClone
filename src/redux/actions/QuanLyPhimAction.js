@@ -17,7 +17,7 @@ export const layDanhSachPhimAction = (tenPhim = "") => {
 				arrPhim: result.data.content,
 			});
 		} catch (err) {
-			console.log(err);
+			alert(err.response?.data.content);
 		}
 	};
 };
@@ -27,10 +27,13 @@ export const themPhimUploadHinhAction = (formData) => {
 		try {
 			let result = await QuanLyPhimService.themPhimUploadHinh(formData);
 
-			console.log(result);
+			if (result.status === STATUS_CODE.SUCCESS) {
+				Notification("success", "Thêm phim thành công!");
+				dispatch(layDanhSachPhimAction());
+				history.push("/admin/films");
+			}
 		} catch (err) {
-			console.log(err);
-			alert(err.response?.data);
+			Notification("error", "Thêm phim thất bại!", err.response?.data.content);
 		}
 	};
 };
@@ -49,7 +52,7 @@ export const layThongTinPhimTheoMaAction = (maPhim) => {
 				});
 			}
 		} catch (err) {
-			console.log(err);
+			alert(err.response?.data.content);
 		}
 	};
 };
@@ -66,8 +69,6 @@ export const capNhatThongTinPhimUploadAction = (formDataUpload) => {
 			dispatch(layDanhSachPhimAction());
 			history.push("/admin/films");
 		} catch (err) {
-			console.log(err);
-
 			Notification(
 				"error",
 				"Cập nhật phim thất bại",

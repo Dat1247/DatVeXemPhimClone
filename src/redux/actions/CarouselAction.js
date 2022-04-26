@@ -11,7 +11,7 @@ export const layDanhSachBannerAction = () => {
 				arrBanner: result.data.content,
 			});
 		} catch (err) {
-			console.log(err);
+			alert(err.response?.data.content);
 		}
 	};
 };

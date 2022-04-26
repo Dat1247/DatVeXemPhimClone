@@ -1,3 +1,4 @@
+import { Notification } from "../../components/Notification/Notification";
 import { QuanLyDatVeService } from "../../services/QuanLyDatVeService";
 import { STATUS_CODE } from "../../utils/settings/config";
 
@@ -20,7 +21,11 @@ export const layThongTinPhongVeAction = (maLichChieu) => {
 				thongTinPhongVe: data.content,
 			});
 		} catch (err) {
-			console.log(err);
+			Notification(
+				"error",
+				"Lấy thông tin phòng vé thất bại! - Vui lòng reload lại trang!",
+				err.response?.data.content
+			);
 		}
 	};
 };
@@ -32,6 +37,7 @@ export const datVeAction = (thongTinDatVe) => {
 			const { data, status } = await QuanLyDatVeService.datVe(thongTinDatVe);
 
 			if (status === STATUS_CODE.SUCCESS) {
+				Notification("success", "Đặt vé thành công!");
 				await dispatch(layThongTinPhongVeAction(thongTinDatVe.maLichChieu));
 				await dispatch({
 					type: DAT_VE_HOAN_TAT,
@@ -43,7 +49,7 @@ export const datVeAction = (thongTinDatVe) => {
 			}
 		} catch (err) {
 			dispatch(closeLoadingAction);
-			console.log(err);
+			Notification("error", "Đặt vé thất bại!", err.response?.data.content);
 		}
 	};
 };

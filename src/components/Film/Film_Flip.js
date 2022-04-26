@@ -36,7 +36,6 @@ export default function Film_Flip(props) {
 						<div
 							className='rounded-full cursor-pointer'
 							onClick={() => {
-								console.log(phim);
 								dispatch(showVideoAction(phim.trailer));
 							}}>
 							<PlayCircleOutlined style={{ fontSize: "50px" }} />

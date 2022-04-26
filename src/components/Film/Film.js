@@ -6,7 +6,6 @@ export default function Film(props) {
 		<div className='h-full bg-gray-100 bg-opacity-75 px-8 pt-16 pb-24 rounded-lg overflow-hidden text-center relative'>
 			<div
 				style={{
-					// backgroundImage: `url(${phim.hinhAnh}), url('https://picsum.photos/1000/200)`,
 					backgroundImage: `${
 						phim.hinhAnh
 							? `url(${phim.hinhAnh})`

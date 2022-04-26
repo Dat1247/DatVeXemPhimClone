@@ -8,6 +8,7 @@ import {
 	themNguoiDungAction,
 } from "../../../../redux/actions/QuanLyNguoiDungAction";
 import * as Yup from "yup";
+import { history } from "../../../../App";
 
 const { Option } = Select;
 
@@ -119,7 +120,6 @@ export default function AddUser(props) {
 				<Form.Item label='Loại người dùng'>
 					<Select
 						name='maLoaiNguoiDung'
-						// defaultValue={"KhachHang"}
 						onChange={(value) => {
 							formik.setFieldValue("maLoaiNguoiDung", value);
 						}}>
@@ -152,6 +152,14 @@ export default function AddUser(props) {
 					</Button>
 				</Form.Item>
 			</Form>
+			<Button
+				className='ml-20'
+				danger
+				onClick={() => {
+					history.goBack();
+				}}>
+				Quay lại
+			</Button>
 		</div>
 	);
 }

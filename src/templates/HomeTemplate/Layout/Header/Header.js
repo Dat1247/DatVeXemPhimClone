@@ -3,21 +3,8 @@ import React, { Fragment } from "react";
 import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { history } from "../../../../App";
-import { Menu, Dropdown, Button, Space } from "antd";
+import { Menu, Dropdown } from "antd";
 import { TOKEN, USER_LOGIN } from "../../../../utils/settings/config";
-
-const menu = (
-	<Menu>
-		<Menu.Item>
-			<a
-				target='_blank'
-				rel='noopener noreferrer'
-				href='https://www.antgroup.com'>
-				Đăng xuất
-			</a>
-		</Menu.Item>
-	</Menu>
-);
 
 export default function Header(props) {
 	const { thongTinDangNhap } = useSelector(
@@ -48,6 +35,33 @@ export default function Header(props) {
 		return (
 			<Dropdown
 				overlay={() => {
+					if (thongTinDangNhap.maLoaiNguoiDung === "QuanTri") {
+						return (
+							<Menu>
+								<Menu.Item key='1'>
+									<button
+										className=' hover:text-blue-800 duration-500'
+										onClick={() => {
+											history.push("/admin/users");
+										}}>
+										Admin
+									</button>
+								</Menu.Item>
+								<Menu.Item key='2'>
+									<button
+										className='text-red-500 hover:text-red-800 duration-500'
+										onClick={() => {
+											localStorage.removeItem(USER_LOGIN);
+											localStorage.removeItem(TOKEN);
+											history.push("/");
+											window.location.reload();
+										}}>
+										Đăng xuất
+									</button>
+								</Menu.Item>
+							</Menu>
+						);
+					}
 					return (
 						<Menu>
 							<Menu.Item key='1'>

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Tabs, Rate } from "antd";
 import { NavLink } from "react-router-dom";
-import _ from "lodash";
+
 import "../../assets/circle/circle.css";
 import { layThongTinLichChieuPhimAction } from "../../redux/actions/QuanLyRapAction";
 import moment from "moment";
@@ -25,8 +25,6 @@ export default function Detail(props) {
 		let maPhim = props.match.params.id;
 		dispatch(layThongTinLichChieuPhimAction(maPhim));
 	}, []);
-
-	// console.log(phimDetail);
 
 	const renderDanhGia = () => {
 		let ratingStar = phimDetail.danhGia / 2;
@@ -62,7 +60,6 @@ export default function Detail(props) {
 					}
 					key={index}>
 					{lichChieu.cumRapChieu?.map((rapChieu, index) => {
-						console.log(rapChieu);
 						return (
 							<div key={index}>
 								<div className='flex mb-3'>
@@ -80,7 +77,7 @@ export default function Detail(props) {
 										</p>
 									</div>
 								</div>
-								<div className='grid grid-cols-4 gap-4'>
+								<div className='grid grid-cols-4 gap-4 mb-4'>
 									{rapChieu.lichChieuPhim?.map((item, index) => {
 										return (
 											<div key={index}>
@@ -99,6 +96,28 @@ export default function Detail(props) {
 				</TabPane>
 			);
 		});
+	};
+
+	const renderThongTinPhim = () => {
+		let ratingStar = phimDetail.danhGia / 2;
+
+		return (
+			<div>
+				<h1 className='text-xl text-white'>
+					Tên phim: <span className='font-bold'>{phimDetail.tenPhim}</span>{" "}
+				</h1>
+				<p className='text-lg mb-2'>
+					Ngày khởi chiếu:{" "}
+					<span>{moment(phimDetail.ngayKhoiChieu).format("DD/MM/YYYY")}</span>
+				</p>
+				<div className='text-base mb-2'>
+					Đánh giá: <Rate disabled allowHalf value={ratingStar} />
+				</div>
+				<p className=''>
+					Mô tả: <span style={{ letterSpacing: "1px" }}>{phimDetail.moTa}</span>
+				</p>
+			</div>
+		);
 	};
 
 	return (
@@ -129,7 +148,7 @@ export default function Detail(props) {
 								<div className='ml-4 flex flex-col  justify-center'>
 									<p className='mb-0'>
 										Ngày khởi chiếu:{" "}
-										{moment(phimDetail.ngayKhoiChieu).format("DD-MM-YYYY")}
+										{moment(phimDetail.ngayKhoiChieu).format("DD/MM/YYYY")}
 									</p>
 									<p className='text-2xl my-4 font-semibold'>
 										{phimDetail.tenPhim}
@@ -148,10 +167,10 @@ export default function Detail(props) {
 								<Tabs tabPosition={"left"}>{renderThongTinLichChieu()}</Tabs>
 							</TabPane>
 							<TabPane tab='Thông Tin' key='2' style={{ marginTop: "25px" }}>
-								Content of Tab Pane 2
+								{renderThongTinPhim()}
 							</TabPane>
 							<TabPane tab='Đánh Giá' key='3' style={{ marginTop: "25px" }}>
-								Content of Tab Pane 3
+								Đánh giá
 							</TabPane>
 						</Tabs>
 					</div>

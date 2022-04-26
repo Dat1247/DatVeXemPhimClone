@@ -8,7 +8,7 @@
     border: 1px solid black;
 }
 
-.gheDaDat {
+.ghe.gheDaDat {
     background-color: rgb(224, 54, 54);
     cursor: no-drop;
     color: white;
@@ -20,7 +20,7 @@
 }
 
 .gheVip {
-    background-color: rgb(228, 74, 8);
+    background-color: rgb(201, 196, 38);
     color: white;
 }
 
